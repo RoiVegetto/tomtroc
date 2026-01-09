@@ -3,6 +3,7 @@
 
   <?php if (!empty($_SESSION['user_id'])): ?>
     <span>Bonjour <?= htmlspecialchars($_SESSION['username']) ?></span>
+    <a href="/tomtroc/public/books/exchange">Nos livres à l’échange</a>
     <a href="/tomtroc/public/account/profile">Mon compte</a>
     <a href="/tomtroc/public/auth/logout">Logout</a>
   <?php else: ?>

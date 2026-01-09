@@ -2,6 +2,7 @@
 
 use Core\Controller;
 use App\Models\User;
+use App\Models\Book;
 
 class AccountController extends Controller
 {
@@ -12,10 +13,14 @@ class AccountController extends Controller
             exit;
         }
 
-        $user = User::findById((int)$_SESSION['user_id']);
+        $userId = (int) $_SESSION['user_id'];
+
+        $user = User::findById($userId);
+        $books = Book::getByUserId($userId);
 
         $this->render('account/profile', [
-            'user' => $user
+            'user' => $user,
+            'books' => $books
         ]);
     }
 
@@ -31,32 +36,39 @@ class AccountController extends Controller
         $username = trim($_POST['username'] ?? '');
         $password = $_POST['password'] ?? '';
 
+        $user  = User::findById($userId);
+        $books = \App\Models\Book::getByUserId($userId);
+
         // validations simples
         if ($email === '' || $username === '') {
             return $this->render('account/profile', [
-                'user' => User::findById($userId),
+                'user'  => $user,
+                'books' => $books,
                 'error' => 'Email et pseudo sont obligatoires.'
             ]);
         }
 
         if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
             return $this->render('account/profile', [
-                'user' => User::findById($userId),
+                'user'  => $user,
+                'books' => $books,
                 'error' => 'Email invalide.'
             ]);
         }
 
-        // Unicité email / username (si changé)
+        // Unicité email / username
         if (User::emailTakenByAnother($email, $userId)) {
             return $this->render('account/profile', [
-                'user' => User::findById($userId),
+                'user'  => $user,
+                'books' => $books,
                 'error' => 'Cet email est déjà utilisé.'
             ]);
         }
 
         if (User::usernameTakenByAnother($username, $userId)) {
             return $this->render('account/profile', [
-                'user' => User::findById($userId),
+                'user'  => $user,
+                'books' => $books,
                 'error' => 'Ce pseudo est déjà utilisé.'
             ]);
         }
