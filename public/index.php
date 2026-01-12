@@ -1,6 +1,7 @@
 <?php
+session_start();
 
-require_once '../app/core/Autoload.php';
+require_once __DIR__ . '/../app/core/Autoload.php';
 
 use Core\Router;
 

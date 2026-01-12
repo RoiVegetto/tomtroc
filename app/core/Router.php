@@ -12,7 +12,11 @@ class Router
         $controllerName = ucfirst($url[0]) . 'Controller';
         $action = $url[1] ?? 'index';
 
-        $controllerPath = "../app/controllers/$controllerName.php";
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $action .= 'Post';
+        }
+
+        $controllerPath = __DIR__ . "/../controllers/$controllerName.php";
 
         if (!file_exists($controllerPath)) {
             die('Controller introuvable');
