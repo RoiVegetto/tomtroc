@@ -14,9 +14,9 @@ class Database
         if (self::$pdo === null) {
             try {
                 self::$pdo = new PDO(
-                    'mysql:host=127.0.0.1;dbname=tomtroc;charset=utf8mb4',
+                    'mysql:host=127.0.0.1;port=3307;dbname=tomtroc;charset=utf8mb4',
                     'root',
-                    '', // mot de passe (souvent vide en local)
+                    '',
                     [
                         PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
                         PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC

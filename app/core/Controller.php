@@ -3,12 +3,17 @@ namespace Core;
 
 class Controller
 {
-    protected function render(string $view, array $data = []): void
+    protected function render(string $view, array $params = [])
     {
-        extract($data); // transforme ['userCount' => 4] en $userCount = 4
+        if (!empty($_SESSION['user_id'])) {
+            $params['unreadCount'] = \App\Models\Message::countUnreadByUser(
+                (int) $_SESSION['user_id']
+            );
+        }
 
-        require __DIR__ . "/../views/layout/header.php";
-        require __DIR__ . "/../views/$view.php";
-        require __DIR__ . "/../views/layout/footer.php";
+        extract($params);
+        require __DIR__ . '/../views/layout/header.php';
+        require __DIR__ . '/../views/' . $view . '.php';
+        require __DIR__ . '/../views/layout/footer.php';
     }
 }

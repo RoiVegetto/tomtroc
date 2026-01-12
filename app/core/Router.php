@@ -30,6 +30,13 @@ class Router
             die('Action introuvable');
         }
 
-        $controller->$action();
+        // ✅ Passer un param si présent (3e segment)
+        $param = $url[2] ?? null;
+
+        if ($param !== null) {
+            $controller->$action($param);
+        } else {
+            $controller->$action();
+        }
     }
 }
