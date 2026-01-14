@@ -36,7 +36,8 @@ class Router
         if ($param !== null) {
             $controller->$action($param);
         } else {
-            $controller->$action();
+            $params = array_slice($url, 2);
+            call_user_func_array([$controller, $action], $params);
         }
     }
 }

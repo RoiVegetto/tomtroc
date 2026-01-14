@@ -6,69 +6,143 @@ use App\Models\User;
 
 class MessagesController extends Controller
 {
+    private function requireAuth()
+    {
+        if (empty($_SESSION['user_id'])) {
+            header('Location: /tomtroc/public/auth/login');
+            exit;
+        }
+    }
+
+    // GET /messages
     public function index()
     {
-        if (empty($_SESSION['user_id'])) {
-            header('Location: /tomtroc/public/auth/login');
-            exit;
-        }
+        $this->requireAuth();
 
-        $userId = (int) $_SESSION['user_id'];
-        $messages = Message::inboxReceived($userId);
+        $userId = (int)$_SESSION['user_id'];
+        $threads = Message::inbox($userId);
+
+        // On récupère le pseudo du "other user" pour affichage
+        foreach ($threads as &$t) {
+            $other = User::findById((int)$t['other_user_id']);
+            $t['other_username'] = $other['username'] ?? 'Utilisateur';
+        }
 
         $this->render('messages/index', [
-            'messages' => $messages
+            'threads' => $threads
         ]);
     }
 
-    // /messages/thread/{id}
-    public function thread($otherId = null)
+    public function thread($conversationId)
     {
-        if (empty($_SESSION['user_id'])) {
-            header('Location: /tomtroc/public/auth/login');
-            exit;
+        $this->requireAuth();
+
+        $conversationId = (int)$conversationId;
+        $userId = (int)$_SESSION['user_id'];
+
+        if (!Message::conversationBelongsTo($conversationId, $userId)) {
+            http_response_code(403);
+            die("Accès interdit");
         }
 
-        $userId = (int) $_SESSION['user_id'];
-        $otherId = (int) $otherId;
+        $otherUserId = Message::getOtherUserId($conversationId, $userId);
+        $otherUser = $otherUserId ? User::findById($otherUserId) : null;
 
-        if ($otherId <= 0) {
-            header('Location: /tomtroc/public/messages');
-            exit;
-        }
-
-        // Marquer comme lus les messages venant de cet utilisateur
-        Message::markThreadRead($userId, $otherId);
-
-        $thread = Message::thread($userId, $otherId);
-        $otherUser = User::findById($otherId);
+        Message::markReadForUser($conversationId, $userId);
+        $messages = Message::getConversationMessages($conversationId);
 
         $this->render('messages/thread', [
-            'thread' => $thread,
-            'otherUser' => $otherUser
+            'conversationId' => $conversationId,
+            'messages'       => $messages,
+            'otherUser'      => $otherUser, // ✅ pour afficher le pseudo en haut
         ]);
     }
 
-    public function sendPost()
+    // GET /messages/new/{userId}
+    public function new($receiverId)
     {
-        if (empty($_SESSION['user_id'])) {
-            header('Location: /tomtroc/public/auth/login');
+        $this->requireAuth();
+
+        $receiverId = (int)$receiverId;
+        $senderId = (int)$_SESSION['user_id'];
+
+        if ($receiverId <= 0 || $receiverId === $senderId) {
+            die("Destinataire invalide");
+        }
+
+        // ✅ Si la conversation existe déjà, on redirige directement vers le thread
+        $existingConvId = Message::findConversationIdBetween($senderId, $receiverId);
+        if ($existingConvId) {
+            header("Location: /tomtroc/public/messages/thread/$existingConvId");
             exit;
         }
 
-        $fromId = (int) $_SESSION['user_id'];
-        $toId = (int) ($_POST['receiver_id'] ?? 0);
-        $content = trim($_POST['content'] ?? '');
-
-        if ($toId <= 0 || $content === '') {
-            // Retour simple vers inbox si erreur
-            header('Location: /tomtroc/public/messages');
-            exit;
+        $receiver = User::findById($receiverId);
+        if (!$receiver) {
+            die("Utilisateur introuvable");
         }
 
-        Message::send($fromId, $toId, $content);
+        $this->render('messages/new', [
+            'receiver' => $receiver
+        ]);
+    }
 
-        header('Location: /tomtroc/public/messages/thread/' . $toId);
+    // POST /messages/new/{userId}
+    public function newPost($receiverId)
+    {
+        $this->requireAuth();
+
+        $receiverId = (int)$receiverId;
+        $senderId = (int)$_SESSION['user_id'];
+        $body = $_POST['body'] ?? '';
+
+        if (!Message::send($senderId, $receiverId, $body)) {
+            $receiver = User::findById($receiverId);
+            return $this->render('messages/new', [
+                'receiver' => $receiver,
+                'error' => 'Message vide.'
+            ]);
+        }
+
+        // ✅ Redirige vers la conversation (créée ou déjà existante)
+        $convId = Message::getOrCreateConversation($senderId, $receiverId);
+        header("Location: /tomtroc/public/messages/thread/$convId");
         exit;
     }
+
+    // POST /messages/thread/{conversationId}
+    public function threadPost($conversationId)
+    {
+        $this->requireAuth();
+
+        $conversationId = (int)$conversationId;
+        $userId = (int)$_SESSION['user_id'];
+        $body = $_POST['body'] ?? '';
+
+        if (!Message::conversationBelongsTo($conversationId, $userId)) {
+            http_response_code(403);
+            die("Accès interdit");
+        }
+
+        $receiverId = Message::getOtherUserId($conversationId, $userId);
+        if (!$receiverId) {
+            die("Conversation invalide");
+        }
+
+        if (!Message::send($userId, $receiverId, $body)) {
+            $messages = Message::getConversationMessages($conversationId);
+            $otherUser = User::findById($receiverId);
+
+            return $this->render('messages/thread', [
+                'conversationId' => $conversationId,
+                'messages'       => $messages,
+                'otherUser'      => $otherUser,
+                'error'          => 'Message vide.'
+            ]);
+        }
+
+        header("Location: /tomtroc/public/messages/thread/$conversationId");
+        exit;
+    }
+
 }

@@ -1,31 +1,53 @@
-<h1>Fil de discussion</h1>
+<h1>
+  Discussion avec
+  <strong><?= htmlspecialchars($otherUser['username'] ?? 'Utilisateur') ?></strong>
+</h1>
 
-<?php if (!empty($otherUser)): ?>
-  <p>Conversation avec : <strong><?= htmlspecialchars($otherUser['username'] ?? 'Utilisateur') ?></strong></p>
+<?php if (!empty($error)): ?>
+  <p style="color:red;"><?= htmlspecialchars($error) ?></p>
 <?php endif; ?>
 
-<?php if (empty($thread)): ?>
-  <p>Aucun message dans ce fil pour le moment.</p>
+<?php if (empty($messages)): ?>
+  <p>Aucun message.</p>
 <?php else: ?>
-  <ul>
-    <?php foreach ($thread as $msg): ?>
-      <li>
-        <strong><?= htmlspecialchars($msg['sender_username']) ?></strong> :
-        <?= nl2br(htmlspecialchars($msg['content'])) ?>
-        <em>(<?= htmlspecialchars($msg['created_at']) ?>)</em>
-      </li>
+  <div>
+    <?php
+      $prevSender = null;
+      $meId = (int)($_SESSION['user_id'] ?? 0);
+      $otherName = $otherUser['username'] ?? 'Utilisateur';
+    ?>
+
+    <?php foreach ($messages as $m): ?>
+      <?php
+        $senderId = (int)$m['sender_id'];
+        $isMe = ($senderId === $meId);
+
+        // Affiche un "label" seulement quand l'expéditeur change
+        if ($prevSender === null || $prevSender !== $senderId):
+      ?>
+          <div style="margin-top:18px; font-weight:bold;">
+            <?= $isMe ? 'Vous' : htmlspecialchars($otherName) ?>
+          </div>
+      <?php endif; ?>
+
+      <div style="margin:6px 0; padding:10px; border:1px solid #eee;">
+        <div style="font-size:12px; color:#666;">
+          <?= htmlspecialchars($m['created_at']) ?>
+        </div>
+        <div><?= nl2br(htmlspecialchars($m['body'])) ?></div>
+      </div>
+
+      <?php $prevSender = $senderId; ?>
     <?php endforeach; ?>
-  </ul>
+  </div>
 <?php endif; ?>
 
 <hr>
 
-<h2>Répondre</h2>
-<form method="POST" action="/tomtroc/public/messages/sendPost">
-  <input type="hidden" name="receiver_id" value="<?= (int)($otherUser['id'] ?? 0) ?>">
-  <textarea name="content" rows="4" cols="50" required></textarea>
+<form method="POST" action="/tomtroc/public/messages/thread/<?= (int)$conversationId ?>">
+  <textarea name="body" rows="4" cols="60" placeholder="Répondre..." required></textarea>
   <br><br>
   <button type="submit">Envoyer</button>
 </form>
 
-<p><a href="/tomtroc/public/messages">← Retour à la liste</a></p>
+<p><a href="/tomtroc/public/messages">Retour messagerie</a></p>

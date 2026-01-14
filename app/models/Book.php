@@ -30,4 +30,24 @@ class Book
         return $stmt->fetchAll();
     }
 
+    public static function findById(int $id): ?array
+    {
+        $pdo = Database::getConnection();
+
+        $stmt = $pdo->prepare("
+            SELECT
+                b.*,
+                u.username AS owner_username
+            FROM books b
+            JOIN users u ON u.id = b.user_id
+            WHERE b.id = :id
+            LIMIT 1
+        ");
+
+        $stmt->execute(['id' => $id]);
+        $book = $stmt->fetch();
+
+        return $book ?: null;
+    }
+
 }

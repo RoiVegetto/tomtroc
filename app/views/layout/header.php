@@ -1,3 +1,15 @@
+<?php
+use App\Models\Message;
+
+// Sécurité : initialisation par défaut
+$unreadCount = 0;
+
+// Si utilisateur connecté → on calcule les messages non lus
+if (!empty($_SESSION['user_id'])) {
+    $unreadCount = Message::countUnread((int)$_SESSION['user_id']);
+}
+?>
+
 <nav>
   <a href="/tomtroc/public/">Accueil</a>
 
@@ -8,8 +20,8 @@
 
     <a href="/tomtroc/public/messages">
       Messagerie
-      <?php if (!empty($unreadCount) && $unreadCount > 0): ?>
-        <span class="badge"><?= $unreadCount ?></span>
+      <?php if ($unreadCount > 0): ?>
+        <span class="badge"><?= (int)$unreadCount ?></span>
       <?php endif; ?>
     </a>
 

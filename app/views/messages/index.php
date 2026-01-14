@@ -1,20 +1,23 @@
 <h1>Messagerie - Messages reçus</h1>
 
-<?php if (empty($messages)): ?>
+<?php if (empty($threads)): ?>
   <p>Aucun message reçu pour le moment.</p>
 <?php else: ?>
   <ul>
-    <?php foreach ($messages as $m): ?>
-      <li>
-        <strong><?= htmlspecialchars($m['sender_username']) ?></strong>
-        — <?= htmlspecialchars($m['content']) ?>
-        <em>(<?= htmlspecialchars($m['created_at']) ?>)</em>
-
-        <?php if ((int)$m['is_read'] === 0): ?>
-          <strong>[non lu]</strong>
+    <?php foreach ($threads as $t): ?>
+      <li style="margin-bottom:12px;">
+        <a href="/tomtroc/public/messages/thread/<?= (int)$t['conversation_id'] ?>">
+          Discussion avec <strong><?= htmlspecialchars($t['other_username']) ?></strong>
+        </a>
+        <?php if (!empty($t['last_body'])): ?>
+          <div style="color:#666;">
+            <?= htmlspecialchars(mb_strimwidth($t['last_body'], 0, 80, '...')) ?>
+          </div>
         <?php endif; ?>
 
-        — <a href="/tomtroc/public/messages/thread/<?= (int)$m['sender_id'] ?>">Voir le fil</a>
+        <?php if ((int)$t['unread_count'] > 0): ?>
+          <span>(<?= (int)$t['unread_count'] ?> non lu)</span>
+        <?php endif; ?>
       </li>
     <?php endforeach; ?>
   </ul>
