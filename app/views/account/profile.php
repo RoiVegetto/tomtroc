@@ -1,26 +1,31 @@
-<h1 class="page-title">Vos informations personnelles</h1>
+<h1>Vos informations personnelles</h1>
 
 <?php if (!empty($error)): ?>
-  <p class="alert alert-error"><?= htmlspecialchars($error) ?></p>
+  <p class="error"><?= htmlspecialchars($error) ?></p>
 <?php endif; ?>
 
-<form method="POST" action="/tomtroc/public/account/profile" class="form form-profile">
-  <div class="form-group">
-    <label for="email">Adresse email</label>
-    <input id="email" type="email" name="email" value="<?= htmlspecialchars($user['email'] ?? '') ?>" required>
-  </div>
+<form method="POST" action="/tomtroc/public/account/profile" enctype="multipart/form-data">
+  <label>Adresse email</label><br>
+  <input type="email" name="email" value="<?= htmlspecialchars($user['email'] ?? '') ?>" required>
+  <br><br>
 
-  <div class="form-group">
-    <label for="password">Mot de passe</label>
-    <input id="password" type="password" name="password" placeholder="Laisser vide pour ne pas changer">
-  </div>
+  <label>Mot de passe</label><br>
+  <input type="password" name="password" placeholder="Laisser vide pour ne pas changer">
+  <br><br>
 
-  <div class="form-group">
-    <label for="username">Pseudo</label>
-    <input id="username" type="text" name="username" value="<?= htmlspecialchars($user['username'] ?? '') ?>" required>
-  </div>
+  <label>Pseudo</label><br>
+  <input type="text" name="username" value="<?= htmlspecialchars($user['username'] ?? '') ?>" required>
+  <br><br>
 
-  <button type="submit" class="btn btn-primary">Enregistrer</button>
+  <label>Photo de profil</label><br>
+  <?php if (!empty($user['avatar'])): ?>
+    <img src="/tomtroc/public/<?= htmlspecialchars($user['avatar']) ?>" alt="avatar" width="60">
+    <br>
+  <?php endif; ?>
+  <input type="file" name="avatar" accept="image/*">
+  <br><br>
+
+  <button type="submit">Enregistrer</button>
 </form>
 
 <hr class="separator">

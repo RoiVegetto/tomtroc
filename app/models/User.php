@@ -93,4 +93,14 @@ class User
         ]);
     }
 
+    public static function updateAvatar(int $userId, string $avatarPath): bool
+    {
+        $pdo = Database::getConnection();
+        $stmt = $pdo->prepare("UPDATE users SET avatar = :avatar WHERE id = :id");
+        return $stmt->execute([
+            'avatar' => $avatarPath,
+            'id' => $userId
+        ]);
+    }
+
 }

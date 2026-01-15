@@ -77,3 +77,41 @@
 @media (max-width: 520px){
   .books-grid{ grid-template-columns: 1fr; }
 }
+
+/**/
+
+/* --- Messagerie (layout de base, sans design final) --- */
+.thread {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.message {
+  display: flex;
+  flex-direction: column;
+  max-width: 70%;
+}
+
+.message--other {
+  align-self: flex-start; /* gauche */
+}
+
+.message--me {
+  align-self: flex-end;   /* droite */
+  text-align: right;
+}
+
+.message__meta {
+  font-size: 12px;
+  opacity: 0.7;
+  margin-bottom: 4px;
+}
+
+.message__bubble {
+  border: 1px solid #eee;
+  padding: 10px;
+  border-radius: 8px;
+  background: #fff;
+  text-align: left; /* le texte reste lisible même à droite */
+}

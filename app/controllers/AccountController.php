@@ -81,6 +81,42 @@ class AccountController extends Controller
             User::updatePassword($userId, $password);
         }
 
+        // Upload avatar (optionnel)
+        if (!empty($_FILES['avatar']) && $_FILES['avatar']['error'] === UPLOAD_ERR_OK) {
+            $tmp  = $_FILES['avatar']['tmp_name'];
+            $name = $_FILES['avatar']['name'];
+
+            $ext = strtolower(pathinfo($name, PATHINFO_EXTENSION));
+            $allowed = ['jpg', 'jpeg', 'png', 'webp'];
+
+            if (!in_array($ext, $allowed, true)) {
+                return $this->render('account/profile', [
+                    'user'  => User::findById($userId),
+                    'books' => $books,
+                    'error' => "Format d'image non autorisé (jpg/jpeg/png/webp)."
+                ]);
+            }
+
+            $dir = __DIR__ . '/../../public/uploads/avatars';
+            if (!is_dir($dir)) {
+                mkdir($dir, 0777, true);
+            }
+
+            $filename = 'avatar_' . $userId . '_' . time() . '.' . $ext;
+            $destPath = $dir . '/' . $filename;
+
+            if (!move_uploaded_file($tmp, $destPath)) {
+                return $this->render('account/profile', [
+                    'user'  => User::findById($userId),
+                    'books' => $books,
+                    'error' => "Impossible d'uploader l'image."
+                ]);
+            }
+
+            // Chemin public stocké en BDD
+            User::updateAvatar($userId, 'uploads/avatars/' . $filename);
+        }
+
         // mettre à jour la session si pseudo changé
         $_SESSION['username'] = $username;
 

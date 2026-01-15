@@ -93,8 +93,11 @@ class MessagesController extends Controller
         $this->requireAuth();
 
         $receiverId = (int)$receiverId;
-        $senderId = (int)$_SESSION['user_id'];
-        $body = $_POST['body'] ?? '';
+        $senderId   = (int)$_SESSION['user_id'];
+        $body       = $_POST['body'] ?? '';
+
+        // crée ou récupère la conversation (1 seule fois)
+        $convId = Message::getOrCreateConversation($senderId, $receiverId);
 
         if (!Message::send($senderId, $receiverId, $body)) {
             $receiver = User::findById($receiverId);
@@ -104,8 +107,6 @@ class MessagesController extends Controller
             ]);
         }
 
-        // ✅ Redirige vers la conversation (créée ou déjà existante)
-        $convId = Message::getOrCreateConversation($senderId, $receiverId);
         header("Location: /tomtroc/public/messages/thread/$convId");
         exit;
     }
