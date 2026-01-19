@@ -107,7 +107,7 @@ class MessagesController extends Controller
             ]);
         }
 
-        header("Location: /tomtroc/public/messages/thread/$convId");
+        header("Location: /tomtroc/public/messages?conv=$convId");
         exit;
     }
 
@@ -142,8 +142,35 @@ class MessagesController extends Controller
             ]);
         }
 
-        header("Location: /tomtroc/public/messages/thread/$conversationId");
+        header("Location: /tomtroc/public/messages?conv=$conversationId");
         exit;
     }
 
+    // API pour récupérer les messages d'une conversation en JSON
+    public function getMessages($conversationId)
+    {
+        $this->requireAuth();
+
+        $conversationId = (int)$conversationId;
+        $userId = (int)$_SESSION['user_id'];
+
+        if (!Message::conversationBelongsTo($conversationId, $userId)) {
+            http_response_code(403);
+            echo json_encode(['error' => 'Accès interdit']);
+            exit;
+        }
+
+        Message::markReadForUser($conversationId, $userId);
+        $messages = Message::getConversationMessages($conversationId);
+        $otherUserId = Message::getOtherUserId($conversationId, $userId);
+        $otherUser = $otherUserId ? User::findById($otherUserId) : null;
+
+        header('Content-Type: application/json');
+        echo json_encode([
+            'conversationId' => $conversationId,
+            'messages' => $messages,
+            'otherUser' => $otherUser
+        ]);
+        exit;
+    }
 }

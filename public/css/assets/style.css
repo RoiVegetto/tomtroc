@@ -67,6 +67,13 @@
   color:#666;
 }
 
+.book-seller {
+  margin: 5px 0 0 0;
+  color: #999;
+  font-size: 0.8rem;
+  font-style: italic;
+}
+
 /* Responsive */
 @media (max-width: 1100px){
   .books-grid{ grid-template-columns: repeat(3, minmax(0, 1fr)); }
@@ -114,4 +121,230 @@
   border-radius: 8px;
   background: #fff;
   text-align: left; /* le texte reste lisible même à droite */
+}
+
+/* Page d'accueil */
+
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  line-height: 1.6;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+.hero-section {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+}
+
+.hero-content {
+  display: flex;
+  align-items: center;
+  gap: 50px;
+}
+
+.hero-text {
+  flex: 1;
+}
+
+.hero-text h1 {
+  font-size: 3rem;
+  margin-bottom: 20px;
+}
+
+.hero-text p {
+  font-size: 1.2rem;
+  margin-bottom: 30px;
+}
+
+.btn-discover {
+  display: inline-block;
+  background: #ff6b6b;
+  color: white;
+  padding: 15px 30px;
+  text-decoration: none;
+  border-radius: 50px;
+  font-weight: bold;
+  transition: background 0.3s;
+}
+
+.btn-discover:hover {
+  background: #ff5252;
+}
+
+.hero-image {
+  flex: 1;
+  text-align: center;
+}
+
+.reading-image {
+  max-width: 100%;
+  height: auto;
+  border-radius: 10px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+}
+
+.image-caption {
+  margin-top: 10px;
+  font-style: italic;
+}
+
+.placeholder-section {
+  padding: 100px 0;
+  text-align: center;
+  background: #f9f9f9;
+}
+
+/* Section derniers livres */
+.latest-books-section {
+  padding: 80px 0;
+  background: white;
+}
+
+.section-title {
+  text-align: center;
+  font-size: 2.5rem;
+  margin-bottom: 50px;
+  color: #333;
+}
+
+.latest-books-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 30px;
+  margin-bottom: 50px;
+}
+
+.book-card-large {
+  display: block;
+  border: 1px solid #eee;
+  border-radius: 12px;
+  padding: 15px;
+  text-decoration: none;
+  color: inherit;
+  background: #fff;
+  transition: transform .12s ease, box-shadow .12s ease;
+  height: fit-content;
+}
+
+.book-card-large:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 12px 30px rgba(0,0,0,.1);
+}
+
+.book-card-large .book-cover {
+  height: 250px; /* Plus grand que les 200px originaux */
+}
+
+.see-all-link {
+  text-align: center;
+}
+
+.btn-see-all {
+  display: inline-block;
+  background: #667eea;
+  color: white;
+  padding: 15px 30px;
+  text-decoration: none;
+  border-radius: 50px;
+  font-weight: bold;
+  transition: background 0.3s;
+}
+
+.btn-see-all:hover {
+  background: #5a67d8;
+}
+
+/* Section Comment ça marche */
+.how-it-works-section {
+  padding: 80px 0;
+  background: #f9f9f9;
+}
+
+.section-subtitle {
+  text-align: center;
+  font-size: 1.2rem;
+  color: #666;
+  margin-bottom: 50px;
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.steps-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 30px;
+  margin-bottom: 50px;
+}
+
+.step {
+  text-align: center;
+  padding: 20px;
+  background: white;
+  border-radius: 10px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+.step-number {
+  width: 50px;
+  height: 50px;
+  background: #667eea;
+  color: white;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+  font-weight: bold;
+  margin: 0 auto 15px;
+}
+
+.step p {
+  font-size: 1rem;
+  color: #333;
+  line-height: 1.5;
+}
+
+/* Section Nos valeurs */
+.values-section {
+  padding: 80px 0;
+  background: white;
+  text-align: center;
+}
+
+.full-width-image {
+  width: 100%;
+  margin-bottom: 50px;
+}
+
+.team-image {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+.values-text {
+  font-size: 1.1rem;
+  color: #555;
+  line-height: 1.6;
+  margin-bottom: 20px;
+  max-width: 800px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.team-signature {
+  font-style: italic;
+  color: #667eea;
+  font-weight: bold;
+  margin-top: 30px;
 }

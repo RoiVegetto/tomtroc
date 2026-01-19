@@ -1,10 +1,115 @@
-<h1>Bienvenue sur TomTroc</h1>
-<p>Le projet est bien lancé 🚀</p>
-<p>Le projet est bien lancé 🚀</p>
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TomTroc - Échangez vos livres</title>
+    <link rel="stylesheet" href="/tomtroc/public/css/style.css">
+</head>
+<body>
+    <!-- Section 1: Introduction -->
+    <section class="hero-section">
+        <div class="container">
+            <div class="hero-content">
+                <div class="hero-text">
+                    <h1>Rejoignez nos lecteurs passionnés</h1>
+                    <p>Donnez une nouvelle vie à vos livres en les échangeant avec d'autres amoureux de la lecture. Nous croyons en la magie du partage de connaissances et d'histoires à travers les livres.</p>
+                    <a href="/tomtroc/public/books/exchange" class="btn-discover">Découvrir</a>
+                </div>
+                <div class="hero-image">
+                    <img src="/tomtroc/public/uploads/reading-man.jpg" alt="Homme lisant" class="reading-image">
+                    <p class="image-caption">Jean Dupont, lecteur passionné</p>
+                </div>
+            </div>
+        </div>
+    </section>
 
-<h1>Bienvenue sur TomTroc</h1>
+    <!-- Section 2: Derniers livres ajoutés -->
+    <section class="latest-books-section">
+        <div class="container">
+            <h2 class="section-title">Les derniers livres ajoutés</h2>
+            <div class="latest-books-grid">
+                <?php if (!empty($latestBooks)): ?>
+                    <?php foreach ($latestBooks as $book): ?>
+                        <a class="book-card-large" href="/tomtroc/public/books/show/<?= (int)$book['id'] ?>">
+                            <div class="book-cover">
+                                <?php if (!empty($book['photo'])): ?>
+                                    <img src="/tomtroc/public/<?= htmlspecialchars($book['photo']) ?>" alt="<?= htmlspecialchars($book['title']) ?>" loading="lazy">
+                                <?php else: ?>
+                                    <div class="book-cover-placeholder"></div>
+                                <?php endif; ?>
+                            </div>
+                            <div class="book-info">
+                                <h3 class="book-title"><?= htmlspecialchars($book['title']) ?></h3>
+                                <p class="book-author"><?= htmlspecialchars($book['author']) ?></p>
+                                <p class="book-seller">Vendu par : <?= htmlspecialchars($book['owner_username']) ?></p>
+                            </div>
+                        </a>
+                    <?php endforeach; ?>
+                <?php else: ?>
+                    <p>Aucun livre disponible pour le moment.</p>
+                <?php endif; ?>
+            </div>
+            <div class="see-all-link">
+                <a href="/tomtroc/public/books/exchange" class="btn-see-all">Voir tous nos livres</a>
+            </div>
+        </div>
+    </section>
 
-<p>
-  Nombre d'utilisateurs inscrits :
-  <strong><?= $userCount ?></strong>
-</p>
+    <!-- Section 3: Comment ça marche -->
+    <section class="how-it-works-section">
+        <div class="container">
+            <h2 class="section-title">Comment ça marche ?</h2>
+            <p class="section-subtitle">Échanger des livres avec TomTroc c'est simple et amusant ! Suivez ces étapes pour commencer :</p>
+            <div class="steps-grid">
+                <div class="step">
+                    <div class="step-number">1</div>
+                    <p>Inscrivez-vous gratuitement sur notre plateforme.</p>
+                </div>
+                <div class="step">
+                    <div class="step-number">2</div>
+                    <p>Ajoutez les livres que vous souhaitez échanger à votre profil.</p>
+                </div>
+                <div class="step">
+                    <div class="step-number">3</div>
+                    <p>Parcourez les livres disponibles chez d'autres membres.</p>
+                </div>
+                <div class="step">
+                    <div class="step-number">4</div>
+                    <p>Proposez un échange et discutez avec d'autres passionnés de lecture.</p>
+                </div>
+            </div>
+            <div class="see-all-link">
+                <a href="/tomtroc/public/books/exchange" class="btn-see-all">Voir tous nos livres</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Section 4: Nos valeurs -->
+    <section class="values-section">
+        <div class="full-width-image">
+            <img src="/tomtroc/public/uploads/team-image.jpg" alt="Équipe Tom Troc" class="team-image">
+        </div>
+        <div class="container">
+            <h2 class="section-title">Nos valeurs</h2>
+            <p class="values-text">
+                Chez Tom Troc, nous mettons l'accent sur le partage, la découverte et la communauté. Nos valeurs sont ancrées dans notre passion pour les livres et notre désir de créer des liens entre les lecteurs. Nous croyons en la puissance des histoires pour rassembler les gens et inspirer des conversations enrichissantes.
+            </p>
+            <p class="values-text">
+                Notre association a été fondée avec une conviction profonde : chaque livre mérite d'être lu et partagé.
+            </p>
+            <p class="values-text">
+                Nous sommes passionnés par la création d'une plateforme conviviale qui permet aux lecteurs de se connecter, de partager leurs découvertes littéraires et d'échanger des livres qui attendent patiemment sur les étagères.
+            </p>
+            <p class="team-signature">L'équipe Tom Troc</p>
+        </div>
+    </section>
+
+    <!-- Placeholder pour les sections suivantes -->
+    <section class="placeholder-section">
+        <div class="container">
+            <p>Sections suivantes à venir...</p>
+        </div>
+    </section>
+</body>
+</html>

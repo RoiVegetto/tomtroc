@@ -15,11 +15,13 @@
   <p><?= nl2br(htmlspecialchars($book['description'])) ?></p>
 <?php endif; ?>
 
-<hr>
+<p><strong>Statut :</strong> <?= ((int)$book['is_available'] === 1) ? 'Disponible à l’échange' : 'Indisponible' ?></p>
 
 <hr>
 
-<p><strong>Propriétaire :</strong> <?= htmlspecialchars($book['owner_username'] ?? 'Utilisateur') ?></p>
+<hr>
+
+<p><strong>Propriétaire :</strong> <a href="/tomtroc/public/account/userProfile/<?= (int)$book['user_id'] ?>"><?= htmlspecialchars($book['owner_username'] ?? 'Utilisateur') ?></a></p>
 
 <?php if (empty($_SESSION['user_id'])): ?>
   <p>
@@ -28,7 +30,8 @@
 
 <?php else: ?>
   <?php if ((int)$book['user_id'] === (int)$_SESSION['user_id']): ?>
-    <p><em>C’est votre livre, vous ne pouvez pas vous envoyer de message.</em></p>
+    <p><em>C’est votre livre.</em></p>
+    <a href="/tomtroc/public/books/edit/<?= (int)$book['id'] ?>">Modifier ce livre</a>
   <?php else: ?>
     <a href="/tomtroc/public/messages/new/<?= (int)$book['user_id'] ?>">
       Envoyer un message

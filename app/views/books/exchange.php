@@ -21,6 +21,7 @@
         <div class="book-info">
           <h3 class="book-title"><?= htmlspecialchars($book['title']) ?></h3>
           <p class="book-author"><?= htmlspecialchars($book['author']) ?></p>
+          <p class="book-seller">Vendu par : <?= htmlspecialchars($book['owner_username']) ?></p>
         </div>
       </a>
     <?php endforeach; ?>

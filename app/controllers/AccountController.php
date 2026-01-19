@@ -123,4 +123,26 @@ class AccountController extends Controller
         header('Location: /tomtroc/public/account/profile');
         exit;
     }
+
+    public function userProfile($userId)
+    {
+        $userId = (int) $userId;
+
+        if ($userId <= 0) {
+            die('ID utilisateur invalide');
+        }
+
+        $user = User::findById($userId);
+
+        if (!$user) {
+            die('Utilisateur introuvable');
+        }
+
+        $books = Book::getByUserId($userId);
+
+        $this->render('users/profile', [
+            'user' => $user,
+            'books' => $books
+        ]);
+    }
 }
