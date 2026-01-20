@@ -1,12 +1,3 @@
-<!DOCTYPE html>
-<html lang="fr">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TomTroc - Échangez vos livres</title>
-    <link rel="stylesheet" href="/tomtroc/public/css/style.css">
-</head>
-<body>
     <!-- Section 1: Introduction -->
     <section class="hero-section">
         <div class="container">
@@ -17,8 +8,8 @@
                     <a href="/tomtroc/public/books/exchange" class="btn-discover">Découvrir</a>
                 </div>
                 <div class="hero-image">
-                    <img src="/tomtroc/public/uploads/reading-man.jpg" alt="Homme lisant" class="reading-image">
-                    <p class="image-caption">Jean Dupont, lecteur passionné</p>
+                    <img src="/tomtroc/public/images/homme_lisant.jpg" alt="Homme lisant" class="reading-image">
+                    <p class="image-caption">Hamza</p>
                 </div>
             </div>
         </div>
@@ -51,7 +42,7 @@
                 <?php endif; ?>
             </div>
             <div class="see-all-link">
-                <a href="/tomtroc/public/books/exchange" class="btn-see-all">Voir tous nos livres</a>
+                <a href="/tomtroc/public/books/exchange" class="btn-see-all">Voir tous les livres</a>
             </div>
         </div>
     </section>
@@ -63,24 +54,20 @@
             <p class="section-subtitle">Échanger des livres avec TomTroc c'est simple et amusant ! Suivez ces étapes pour commencer :</p>
             <div class="steps-grid">
                 <div class="step">
-                    <div class="step-number">1</div>
                     <p>Inscrivez-vous gratuitement sur notre plateforme.</p>
                 </div>
                 <div class="step">
-                    <div class="step-number">2</div>
                     <p>Ajoutez les livres que vous souhaitez échanger à votre profil.</p>
                 </div>
                 <div class="step">
-                    <div class="step-number">3</div>
                     <p>Parcourez les livres disponibles chez d'autres membres.</p>
                 </div>
                 <div class="step">
-                    <div class="step-number">4</div>
                     <p>Proposez un échange et discutez avec d'autres passionnés de lecture.</p>
                 </div>
             </div>
             <div class="see-all-link">
-                <a href="/tomtroc/public/books/exchange" class="btn-see-all">Voir tous nos livres</a>
+                <a href="/tomtroc/public/books/exchange" class="btn-see-all">Voir tous les livres</a>
             </div>
         </div>
     </section>
@@ -88,7 +75,7 @@
     <!-- Section 4: Nos valeurs -->
     <section class="values-section">
         <div class="full-width-image">
-            <img src="/tomtroc/public/uploads/team-image.jpg" alt="Équipe Tom Troc" class="team-image">
+            <img src="/tomtroc/public/images/femme_biblio.jpg" alt="Équipe Tom Troc" class="team-image">
         </div>
         <div class="container">
             <h2 class="section-title">Nos valeurs</h2>
@@ -104,12 +91,3 @@
             <p class="team-signature">L'équipe Tom Troc</p>
         </div>
     </section>
-
-    <!-- Placeholder pour les sections suivantes -->
-    <section class="placeholder-section">
-        <div class="container">
-            <p>Sections suivantes à venir...</p>
-        </div>
-    </section>
-</body>
-</html>

@@ -29,6 +29,7 @@ class MessagesController extends Controller
         }
 
         $this->render('messages/index', [
+            'title' => 'Messagerie - TomTroc',
             'threads' => $threads
         ]);
     }
@@ -52,6 +53,7 @@ class MessagesController extends Controller
         $messages = Message::getConversationMessages($conversationId);
 
         $this->render('messages/thread', [
+            'title' => 'Discussion avec ' . ($otherUser['username'] ?? 'Utilisateur') . ' - TomTroc',
             'conversationId' => $conversationId,
             'messages'       => $messages,
             'otherUser'      => $otherUser, // ✅ pour afficher le pseudo en haut
@@ -83,6 +85,7 @@ class MessagesController extends Controller
         }
 
         $this->render('messages/new', [
+            'title' => 'Nouveau message - TomTroc',
             'receiver' => $receiver
         ]);
     }

@@ -7,7 +7,7 @@ class AuthController extends Controller
 {
     public function register()
     {
-        $this->render('auth/register');
+        $this->render('auth/register', ['title' => 'Inscription - TomTroc']);
     }
 
     public function registerPost()
@@ -41,7 +41,7 @@ class AuthController extends Controller
 
     public function login()
     {
-        $this->render('auth/login');
+        $this->render('auth/login', ['title' => 'Connexion - TomTroc']);
     }
 
     public function loginPost()

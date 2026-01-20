@@ -11,9 +11,10 @@ class Controller
             );
         }
 
+        $title = $params['title'] ?? 'TomTroc - Échangez vos livres';
+        unset($params['title']);
+
         extract($params);
-        require __DIR__ . '/../views/layout/header.php';
-        require __DIR__ . '/../views/' . $view . '.php';
-        require __DIR__ . '/../views/layout/footer.php';
+        require __DIR__ . '/../views/layout/layout.php';
     }
 }

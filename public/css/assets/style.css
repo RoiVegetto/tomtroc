@@ -8,6 +8,185 @@
   font-weight: bold;
 }
 
+html, body {
+  height: 100%;
+}
+
+body {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  margin: 0;
+}
+
+.page-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Header */
+nav.site-nav {
+  position: relative;
+  width: 1440px;
+  height: 80px;
+  min-height: 80px;
+  background: #F5F3EF;
+  z-index: 10;
+  margin: 0 auto;
+}
+
+/* Logo */
+.logo-link {
+  position: absolute;
+  width: 155px;
+  height: 51px;
+  left: 150px;
+  top: 15px;
+  text-decoration: none;
+}
+
+.logo-link svg {
+  width: 155px;
+  height: 51px;
+}
+
+/* Navigation links */
+nav a.nav-accueil {
+  position: absolute;
+  left: 383px;
+  top: 31px;
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 17px;
+  letter-spacing: 0.02em;
+  color: #292929;
+  text-decoration: none;
+}
+
+nav a.nav-livres {
+  position: absolute;
+  left: 477px;
+  top: 31px;
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 17px;
+  letter-spacing: 0.02em;
+  color: #292929;
+  text-decoration: none;
+}
+
+nav a.nav-messages {
+  position: absolute;
+  left: 910px;
+  top: 31px;
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 17px;
+  letter-spacing: 0.02em;
+  color: #292929;
+  text-decoration: none;
+}
+
+nav a.nav-compte {
+  position: absolute;
+  left: 1074px;
+  top: 31px;
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 17px;
+  letter-spacing: 0.02em;
+  color: #292929;
+  text-decoration: none;
+}
+
+nav a.nav-deconnexion {
+  position: absolute;
+  left: 1170px;
+  top: 31px;
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 17px;
+  letter-spacing: 0.02em;
+  color: #292929;
+  text-decoration: none;
+}
+
+nav a.nav-connexion {
+  position: absolute;
+  left: 1074px;
+  top: 31px;
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 17px;
+  letter-spacing: 0.02em;
+  color: #292929;
+  text-decoration: none;
+}
+
+/* removed flex wrappers */
+
+/* Badge for messages */
+.badge {
+  position: absolute;
+  top: -8px;
+  right: -25px;
+  background: #292929;
+  color: #F5F3EF;
+  border-radius: 6.75px;
+  padding: 2px 6px;
+  font-size: 8px;
+  font-weight: 700;
+  min-width: 15px;
+  text-align: center;
+}
+
+/* Icons using pseudo-elements */
+nav a.nav-messages::before {
+  content: '';
+  position: absolute;
+  left: -20px;
+  top: 2px;
+  width: 15px;
+  height: 13px;
+  border: 1px solid #292929;
+  border-radius: 2px;
+}
+
+nav a.nav-compte::before {
+  content: '';
+  position: absolute;
+  left: -15px;
+  top: 2px;
+  width: 9px;
+  height: 13px;
+  border: 1px solid #292929;
+  border-radius: 50% 50% 0 0;
+}
+
+nav a[href="/tomtroc/public/account/profile"]::after {
+  content: '';
+  position: absolute;
+  left: -15px;
+  top: 11px;
+  width: 9px;
+  height: 4px;
+  background: #D9D9D9;
+  border-radius: 0 0 50% 50%;
+}
+
 /* Page "Nos livres a l'échange" */
 
 .books-grid{
@@ -129,20 +308,22 @@ body {
   margin: 0;
   font-family: Arial, sans-serif;
   line-height: 1.6;
+  max-width: 1440px;
+  margin: 0 auto;
 }
 
 .container {
-  max-width: 1200px;
+  max-width: 1440px;
   margin: 0 auto;
   padding: 0 20px;
 }
 
 .hero-section {
-  min-height: 100vh;
+  min-height: 700px;
   display: flex;
   align-items: center;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  color: white;
+  background: #F5F3EF;
+  color: #292929;
 }
 
 .hero-content {
@@ -166,35 +347,80 @@ body {
 }
 
 .btn-discover {
-  display: inline-block;
-  background: #ff6b6b;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 152px;
+  height: 63px;
+  background: #00AC66;
   color: white;
-  padding: 15px 30px;
+  padding: 22px 38px;
   text-decoration: none;
-  border-radius: 50px;
+  border-radius: 10px;
   font-weight: bold;
   transition: background 0.3s;
+  box-sizing: border-box;
+  white-space: nowrap;
 }
 
 .btn-discover:hover {
-  background: #ff5252;
+  background: #006D41;
 }
 
 .hero-image {
-  flex: 1;
   text-align: center;
+  position: relative;
+  display: inline-block;
+  width: 404px;
 }
 
 .reading-image {
-  max-width: 100%;
-  height: auto;
-  border-radius: 10px;
-  box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+  width: 404px;
+  height: 539px;
+  object-fit: cover;
+  display: block;
 }
 
 .image-caption {
+  position: absolute;
+  top: 100%;
+  right: 0;
   margin-top: 10px;
+  font-size: 12px;
   font-style: italic;
+  text-align: right;
+}
+
+/* Footer */
+.site-footer {
+  background: #ffffff;
+  height: 60px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.footer-content {
+  width: 1440px;
+  height: 60px;
+  display: flex;
+  align-items: center;
+  padding-left: 944px;
+  gap: 20px;
+  font-size: 15px;
+  color: #292929;
+  box-sizing: border-box;
+}
+
+.footer-content span {
+  display: inline-flex;
+  align-items: center;
+}
+
+.footer-logo svg {
+  display: block;
+  width: 22px;
+  height: 18px;
 }
 
 .placeholder-section {
@@ -249,18 +475,24 @@ body {
 }
 
 .btn-see-all {
-  display: inline-block;
-  background: #667eea;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 152px;
+  height: 63px;
+  background: #00AC66;
   color: white;
-  padding: 15px 30px;
+  padding: 22px 38px;
   text-decoration: none;
-  border-radius: 50px;
+  border-radius: 10px;
   font-weight: bold;
   transition: background 0.3s;
+  box-sizing: border-box;
+  white-space: nowrap;
 }
 
 .btn-see-all:hover {
-  background: #5a67d8;
+  background: #006D41;
 }
 
 /* Section Comment ça marche */
@@ -280,56 +512,52 @@ body {
 }
 
 .steps-grid {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 30px;
+  display: flex;
+  justify-content: center;
+  gap: 36px;
   margin-bottom: 50px;
 }
 
 .step {
   text-align: center;
-  padding: 20px;
+  padding: 0 10px;
+  width: 215px;
+  height: 139px;
   background: white;
   border-radius: 10px;
   box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-}
-
-.step-number {
-  width: 50px;
-  height: 50px;
-  background: #667eea;
-  color: white;
-  border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 1.5rem;
-  font-weight: bold;
-  margin: 0 auto 15px;
 }
 
 .step p {
-  font-size: 1rem;
+  font-size: 14px;
+  font-weight: 400;
   color: #333;
-  line-height: 1.5;
+  line-height: 1.4;
+  margin: 0;
 }
 
 /* Section Nos valeurs */
 .values-section {
-  padding: 80px 0;
   background: white;
   text-align: center;
 }
 
 .full-width-image {
   width: 100%;
-  margin-bottom: 50px;
+  max-width: 1440px;
+  margin: 0 auto 50px;
+  overflow: hidden;
 }
 
 .team-image {
   width: 100%;
-  height: auto;
+  height: 230px;
   display: block;
+  object-fit: cover;
+  object-position: center 40%;
 }
 
 .values-text {

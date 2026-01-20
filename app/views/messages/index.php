@@ -1,35 +1,37 @@
-<h1>Messagerie</h1>
+    <div class="container">
+        <h1>Messagerie</h1>
 
-<div class="messagerie-container">
-  <div class="discussions">
-    <h2>Discussions</h2>
-    <?php if (empty($threads)): ?>
-      <p>Aucun message reçu pour le moment.</p>
-    <?php else: ?>
-      <ul id="threads-list">
-        <?php foreach ($threads as $t): ?>
-          <li class="thread-item" data-conversation-id="<?= (int)$t['conversation_id'] ?>" style="margin-bottom:12px; cursor:pointer;">
-            <strong><?= htmlspecialchars($t['other_username']) ?></strong>
-            <?php if (!empty($t['last_body'])): ?>
-              <div style="color:#666;">
-                <?= htmlspecialchars(mb_strimwidth($t['last_body'], 0, 80, '...')) ?>
-              </div>
+        <div class="messagerie-container">
+          <div class="discussions">
+            <h2>Discussions</h2>
+            <?php if (empty($threads)): ?>
+              <p>Aucun message reçu pour le moment.</p>
+            <?php else: ?>
+              <ul id="threads-list">
+                <?php foreach ($threads as $t): ?>
+                  <li class="thread-item" data-conversation-id="<?= (int)$t['conversation_id'] ?>" style="margin-bottom:12px; cursor:pointer;">
+                    <strong><?= htmlspecialchars($t['other_username']) ?></strong>
+                    <?php if (!empty($t['last_body'])): ?>
+                      <div style="color:#666;">
+                        <?= htmlspecialchars(mb_strimwidth($t['last_body'], 0, 80, '...')) ?>
+                      </div>
+                    <?php endif; ?>
+                    <?php if ((int)$t['unread_count'] > 0): ?>
+                      <span>(<?= (int)$t['unread_count'] ?> non lu)</span>
+                    <?php endif; ?>
+                  </li>
+                <?php endforeach; ?>
+              </ul>
             <?php endif; ?>
-            <?php if ((int)$t['unread_count'] > 0): ?>
-              <span>(<?= (int)$t['unread_count'] ?> non lu)</span>
-            <?php endif; ?>
-          </li>
-        <?php endforeach; ?>
-      </ul>
-    <?php endif; ?>
-  </div>
+          </div>
 
-  <div class="conversation">
-    <div id="conversation-content">
-      <p>Sélectionnez une discussion pour voir les messages.</p>
+          <div class="conversation">
+            <div id="conversation-content">
+              <p>Sélectionnez une discussion pour voir les messages.</p>
+            </div>
+          </div>
+        </div>
     </div>
-  </div>
-</div>
 
 <script>
 document.addEventListener('DOMContentLoaded', function() {
@@ -160,3 +162,5 @@ document.addEventListener('DOMContentLoaded', function() {
   margin-bottom: 5px;
 }
 </style>
+</body>
+</html>
