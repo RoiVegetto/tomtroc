@@ -32,6 +32,22 @@ class Book
         return $stmt->fetchAll();
     }
 
+    public static function search(string $searchTerm): array
+    {
+        $pdo = Database::getConnection();
+        $stmt = $pdo->prepare("
+            SELECT b.id, b.photo, b.title, b.author, b.description, b.is_available, u.username AS owner_username
+            FROM books b
+            JOIN users u ON u.id = b.user_id
+            WHERE b.is_available = 1
+            AND (b.title LIKE :search OR b.author LIKE :search)
+            ORDER BY b.id DESC
+        ");
+        $searchParam = '%' . $searchTerm . '%';
+        $stmt->execute(['search' => $searchParam]);
+        return $stmt->fetchAll();
+    }
+
     public static function getLatest(int $limit = 4): array
     {
         $pdo = Database::getConnection();

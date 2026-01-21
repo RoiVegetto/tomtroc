@@ -7,7 +7,13 @@ class BooksController extends Controller
 {
     public function exchange()
     {
-        $books = Book::getAvailable();
+        $search = isset($_GET['search']) ? trim($_GET['search']) : '';
+        
+        if (!empty($search)) {
+            $books = Book::search($search);
+        } else {
+            $books = Book::getAvailable();
+        }
 
         $this->render('books/exchange', [
             'books' => $books
