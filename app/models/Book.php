@@ -26,7 +26,6 @@ class Book
             SELECT b.id, b.photo, b.title, b.author, b.description, b.is_available, u.username AS owner_username
             FROM books b
             JOIN users u ON u.id = b.user_id
-            WHERE b.is_available = 1
             ORDER BY b.id DESC
         ");
         return $stmt->fetchAll();
@@ -39,8 +38,7 @@ class Book
             SELECT b.id, b.photo, b.title, b.author, b.description, b.is_available, u.username AS owner_username
             FROM books b
             JOIN users u ON u.id = b.user_id
-            WHERE b.is_available = 1
-            AND (b.title LIKE :search OR b.author LIKE :search)
+            WHERE (b.title LIKE :search OR b.author LIKE :search)
             ORDER BY b.id DESC
         ");
         $searchParam = '%' . $searchTerm . '%';
@@ -55,7 +53,6 @@ class Book
             SELECT b.id, b.photo, b.title, b.author, b.description, b.is_available, u.username AS owner_username
             FROM books b
             JOIN users u ON u.id = b.user_id
-            WHERE b.is_available = 1
             ORDER BY b.id DESC
             LIMIT :limit
         ");

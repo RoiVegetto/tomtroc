@@ -208,7 +208,7 @@ nav a[href="/tomtroc/public/account/profile"]::after {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 30px;
+  margin: 130px 0px 50px;
 }
 
 .books-header h1 {
@@ -274,6 +274,27 @@ nav a[href="/tomtroc/public/account/profile"]::after {
   background: #f2f2f2;
   flex-shrink: 0;
   border-radius: 0;
+  position: relative;
+}
+
+.book-tag-unavailable {
+  position: absolute;
+  top: 16px;
+  right: 20px;
+  width: 71.625px;
+  height: 18.395832061767578px;
+  background: #C56D6D;
+  color: white;
+  padding: 3.7px 13.31px;
+  font-size: 12px;
+  font-weight: 500;
+  border-radius: 29.58px;
+  z-index: 10;
+  gap: 7.4px;
+  opacity: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .book-cover img{

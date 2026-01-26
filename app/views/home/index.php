@@ -24,6 +24,9 @@
                     <?php foreach ($latestBooks as $book): ?>
                         <a class="book-card-large" href="/tomtroc/public/books/show/<?= (int)$book['id'] ?>">
                             <div class="book-cover">
+                                <?php if (!$book['is_available']): ?>
+                                    <span class="book-tag-unavailable">non dispo.</span>
+                                <?php endif; ?>
                                 <?php if (!empty($book['photo'])): ?>
                                     <img src="/tomtroc/public/<?= htmlspecialchars($book['photo']) ?>" alt="<?= htmlspecialchars($book['title']) ?>" loading="lazy">
                                 <?php else: ?>
