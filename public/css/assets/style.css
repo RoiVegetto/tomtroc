@@ -8,69 +8,65 @@
   font-weight: bold;
 }
 
-html, body {
+/* Reset et structure globale */
+* {
+  box-sizing: border-box;
+}
+
+html {
   height: 100%;
 }
 
 body {
-  height: 100vh;
+  min-height: 100vh;
   display: flex;
   flex-direction: column;
   margin: 0;
-  overflow-y: auto;
-  scrollbar-width: none; /* Firefox */
-  -ms-overflow-style: none; /* IE/Edge */
-}
-
-body::-webkit-scrollbar {
-  display: none; /* Chrome/Safari/Opera */
+  padding: 0;
+  font-family: Arial, sans-serif;
 }
 
 .page-content {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  overflow-y: auto;
-  scrollbar-width: none; /* Firefox */
-  -ms-overflow-style: none; /* IE/Edge */
+  flex: 1 0 auto;
   background: #FAF9F7;
-}
-
-.page-content::-webkit-scrollbar {
-  display: none; /* Chrome/Safari/Opera */
+  width: 100%;
 }
 
 /* Header */
 nav.site-nav {
-  position: relative;
-  width: 1440px;
+  width: 100%;
+  max-width: 1440px;
   height: 80px;
-  min-height: 80px;
   background: #F5F3EF;
-  z-index: 10;
   margin: 0 auto;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  padding: 0 150px;
+  gap: 28px;
 }
 
 /* Logo */
 .logo-link {
-  position: absolute;
   width: 155px;
   height: 51px;
-  left: 150px;
-  top: 15px;
   text-decoration: none;
+  flex-shrink: 0;
 }
 
 .logo-link svg {
   width: 155px;
   height: 51px;
+  display: block;
 }
 
 /* Navigation links */
-nav a.nav-accueil {
-  position: absolute;
-  left: 383px;
-  top: 31px;
+nav a.nav-accueil,
+nav a.nav-livres,
+nav a.nav-messages,
+nav a.nav-compte,
+nav a.nav-deconnexion,
+nav a.nav-connexion {
   font-family: 'Inter';
   font-style: normal;
   font-weight: 400;
@@ -79,76 +75,24 @@ nav a.nav-accueil {
   letter-spacing: 0.02em;
   color: #292929;
   text-decoration: none;
+  white-space: nowrap;
+  position: relative;
+}
+
+nav a.nav-accueil.active,
+nav a.nav-livres.active,
+nav a.nav-messages.active,
+nav a.nav-compte.active,
+nav a.nav-connexion.active {
+  font-weight: 600;
 }
 
 nav a.nav-livres {
-  position: absolute;
-  left: 477px;
-  top: 31px;
-  font-family: 'Inter';
-  font-style: normal;
-  font-weight: 400;
-  font-size: 14px;
-  line-height: 17px;
-  letter-spacing: 0.02em;
-  color: #292929;
-  text-decoration: none;
+  margin-right: auto;
 }
 
 nav a.nav-messages {
-  position: absolute;
-  left: 910px;
-  top: 31px;
-  font-family: 'Inter';
-  font-style: normal;
-  font-weight: 400;
-  font-size: 14px;
-  line-height: 17px;
-  letter-spacing: 0.02em;
-  color: #292929;
-  text-decoration: none;
-}
-
-nav a.nav-compte {
-  position: absolute;
-  left: 1074px;
-  top: 31px;
-  font-family: 'Inter';
-  font-style: normal;
-  font-weight: 400;
-  font-size: 14px;
-  line-height: 17px;
-  letter-spacing: 0.02em;
-  color: #292929;
-  text-decoration: none;
-}
-
-nav a.nav-deconnexion {
-  position: absolute;
-  left: 1170px;
-  top: 31px;
-  font-family: 'Inter';
-  font-style: normal;
-  font-weight: 400;
-  font-size: 14px;
-  line-height: 17px;
-  letter-spacing: 0.02em;
-  color: #292929;
-  text-decoration: none;
-}
-
-nav a.nav-connexion {
-  position: absolute;
-  left: 1074px;
-  top: 31px;
-  font-family: 'Inter';
-  font-style: normal;
-  font-weight: 400;
-  font-size: 14px;
-  line-height: 17px;
-  letter-spacing: 0.02em;
-  color: #292929;
-  text-decoration: none;
+  margin-left: auto;
 }
 
 /* removed flex wrappers */
@@ -400,12 +344,6 @@ nav a[href="/tomtroc/public/account/profile"]::after {
 
 /* Page d'accueil */
 
-body {
-  font-family: Arial, sans-serif;
-  max-width: 1440px;
-  margin: 0 auto;
-}
-
 .container {
   max-width: 1440px;
   margin: 0 auto;
@@ -501,6 +439,7 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
+  flex-shrink: 0;
 }
 
 .footer-content {
