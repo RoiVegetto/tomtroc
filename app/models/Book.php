@@ -95,4 +95,11 @@ class Book
         $stmt = $pdo->prepare("UPDATE books SET " . implode(', ', $fields) . " WHERE id = :id");
         return $stmt->execute($params);
     }
+
+    public static function delete(int $id): bool
+    {
+        $pdo = Database::getConnection();
+        $stmt = $pdo->prepare("DELETE FROM books WHERE id = :id");
+        return $stmt->execute(['id' => $id]);
+    }
 }

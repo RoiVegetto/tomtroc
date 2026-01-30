@@ -33,13 +33,17 @@ body {
 }
 
 /* Header */
+header {
+  width: 100%;
+  background: #F5F3EF;
+  flex-shrink: 0;
+}
+
 nav.site-nav {
   width: 100%;
   max-width: 1440px;
   height: 80px;
-  background: #F5F3EF;
   margin: 0 auto;
-  flex-shrink: 0;
   display: flex;
   align-items: center;
   padding: 0 150px;
@@ -197,7 +201,7 @@ nav a[href="/tomtroc/public/account/profile"]::after {
 .books-grid{
   display:grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap:20px;
+  gap:38px;
 }
 
 .book-card{
@@ -209,6 +213,7 @@ nav a[href="/tomtroc/public/account/profile"]::after {
   background: #fff;
   overflow: hidden;
   border-radius: 0 0 10px 10px;
+  margin: 0 0 10px 0;
 }
 
 .book-cover{
@@ -225,7 +230,6 @@ nav a[href="/tomtroc/public/account/profile"]::after {
   position: absolute;
   top: 16px;
   right: 20px;
-  width: 71.625px;
   height: 18.395832061767578px;
   background: #C56D6D;
   color: white;
@@ -347,7 +351,7 @@ nav a[href="/tomtroc/public/account/profile"]::after {
 .container {
   max-width: 1440px;
   margin: 0 auto;
-  padding: 0 20px;
+  padding: 0 321px;
 }
 
 .hero-section {
@@ -697,4 +701,41 @@ nav a[href="/tomtroc/public/account/profile"]::after {
   margin-left: auto;
   margin-right: auto;
   text-align: left;
+}
+
+/* Actions des livres */
+.book-actions {
+  display: flex;
+  gap: 10px;
+  margin-top: 15px;
+}
+
+.btn-edit, .btn-delete {
+  padding: 8px 16px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 500;
+  text-decoration: none;
+  transition: all 0.3s ease;
+}
+
+.btn-edit {
+  background-color: #007bff;
+  color: white;
+  display: inline-block;
+}
+
+.btn-edit:hover {
+  background-color: #0056b3;
+}
+
+.btn-delete {
+  background-color: #dc3545;
+  color: white;
+}
+
+.btn-delete:hover {
+  background-color: #c82333;
 }

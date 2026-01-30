@@ -115,4 +115,44 @@ class BooksController extends Controller
         header('Location: /tomtroc/public/books/show/' . $id);
         exit;
     }
+
+    public function delete($id)
+    {
+        if (empty($_SESSION['user_id'])) {
+            header('Location: /tomtroc/public/auth/login');
+            exit;
+        }
+
+        $id = (int) $id;
+        $book = Book::findById($id);
+
+        if (!$book) {
+            http_response_code(404);
+            die('Livre introuvable');
+        }
+
+        // Vérifier que l'utilisateur est bien le propriétaire du livre
+        if ((int)$book['user_id'] !== (int)$_SESSION['user_id']) {
+            die('Accès refusé');
+        }
+
+        // Supprimer la photo si elle existe
+        if (!empty($book['photo'])) {
+            $photoPath = __DIR__ . '/../../public/' . $book['photo'];
+            if (file_exists($photoPath)) {
+                unlink($photoPath);
+            }
+        }
+
+        // Supprimer le livre de la base de données
+        Book::delete($id);
+
+        header('Location: /tomtroc/public/account/profile');
+        exit;
+    }
+
+    public function deletePost($id)
+    {
+        $this->delete($id);
+    }
 }

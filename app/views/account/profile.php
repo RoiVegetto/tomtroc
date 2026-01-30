@@ -65,6 +65,16 @@
                                             : 'Indisponible'; ?>
                                     </strong>
                                 </p>
+                                <div class="book-actions">
+                                    <a href="/tomtroc/public/books/edit/<?= $book['id'] ?>" class="btn-edit">
+                                        Éditer
+                                    </a>
+                                    <form method="POST" action="/tomtroc/public/books/delete/<?= $book['id'] ?>" style="display: inline;" onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer ce livre ?');">
+                                        <button type="submit" class="btn-delete">
+                                            Supprimer
+                                        </button>
+                                    </form>
+                                </div>                            
                             </div>
                         <?php endforeach; ?>
                     </div>
