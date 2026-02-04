@@ -34,13 +34,15 @@ $isAuth = (strpos($currentUri, '/tomtroc/public/auth') !== false);
   <?php if (!empty($_SESSION['user_id'])): ?>
 
     <a href="/tomtroc/public/messages" class="nav-messages <?= $isMessages ? 'active' : '' ?>">
-      Messagerie
+      <i class="fa-regular fa-comment"></i> Messagerie
       <?php if ($unreadCount > 0): ?>
         <span class="badge"><?= (int)$unreadCount ?></span>
       <?php endif; ?>
     </a>
 
-    <a href="/tomtroc/public/account/profile" class="nav-compte <?= $isAccount ? 'active' : '' ?>">Mon compte</a>
+    <a href="/tomtroc/public/account/profile" class="nav-compte <?= $isAccount ? 'active' : '' ?>">
+      <i class="fa-regular fa-user"></i> Mon compte
+    </a>
     <a href="/tomtroc/public/auth/logout" class="nav-deconnexion">Déconnexion</a>
   <?php else: ?>
     <a href="/tomtroc/public/auth/login" class="nav-connexion <?= $isAuth ? 'active' : '' ?>">Connexion</a>

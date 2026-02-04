@@ -70,7 +70,7 @@
                 </div>
             </div>
             <div class="see-all-link">
-                <a href="/tomtroc/public/books/exchange" class="btn-see-all">Voir tous les livres</a>
+                <a href="/tomtroc/public/books/exchange" class="btn-see-all-secondary">Voir tous les livres</a>
             </div>
         </div>
     </section>
@@ -92,5 +92,8 @@
                 Nous sommes passionnés par la création d'une plateforme conviviale qui permet aux lecteurs de se connecter, de partager leurs découvertes littéraires et d'échanger des livres qui attendent patiemment sur les étagères.
             </p>
             <p class="team-signature">L'équipe Tom Troc</p>
+            <div class="heart-icon">
+                <img src="/tomtroc/public/images/coeur.svg" alt="Coeur">
+            </div>
         </div>
     </section>
