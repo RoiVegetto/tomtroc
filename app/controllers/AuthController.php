@@ -46,14 +46,14 @@ class AuthController extends Controller
 
     public function loginPost()
     {
-        $username = trim($_POST['username'] ?? '');
+        $email = trim($_POST['email'] ?? '');
         $password = $_POST['password'] ?? '';
 
-        if ($username === '' || $password === '') {
-            return $this->render('auth/login', ['error' => 'Pseudo et mot de passe requis.']);
+        if ($email === '' || $password === '') {
+            return $this->render('auth/login', ['error' => 'Adresse mail et mot de passe requis.']);
         }
 
-        $user = User::findByUsername($username);
+        $user = User::findByEmail($email);
 
         if (!$user || !password_verify($password, $user['password_hash'])) {
             return $this->render('auth/login', ['error' => 'Identifiants incorrects.']);

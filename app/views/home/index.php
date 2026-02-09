@@ -22,7 +22,7 @@
             <div class="latest-books-grid">
                 <?php if (!empty($latestBooks)): ?>
                     <?php foreach ($latestBooks as $book): ?>
-                        <a class="book-card-large" href="/tomtroc/public/books/show/<?= (int)$book['id'] ?>">
+                        <a class="book-card" href="/tomtroc/public/books/show/<?= (int)$book['id'] ?>">
                             <div class="book-cover">
                                 <?php if (!$book['is_available']): ?>
                                     <span class="book-tag-unavailable">non dispo.</span>

@@ -1,40 +1,69 @@
-    <div class="container">
-        <h1><?= htmlspecialchars($book['title']) ?></h1>
-
-        <p><strong>Auteur :</strong> <?= htmlspecialchars($book['author']) ?></p>
-
-        <?php if (!empty($book['photo'])): ?>
-          <img
-            src="/tomtroc/public/<?= htmlspecialchars($book['photo']) ?>"
-            alt="<?= htmlspecialchars($book['title']) ?>"
-            style="max-width:400px; width:100%; height:auto;"
-          >
-        <?php endif; ?>
-
-        <?php if (!empty($book['description'])): ?>
-          <h3>Description</h3>
-          <p><?= nl2br(htmlspecialchars($book['description'])) ?></p>
-        <?php endif; ?>
-
-        <p><strong>Statut :</strong> <?= ((int)$book['is_available'] === 1) ? "Disponible à l'échange" : 'Indisponible' ?></p>
-
-        <hr>
-
-        <p><strong>Propriétaire :</strong> <a href="/tomtroc/public/account/userProfile/<?= (int)$book['user_id'] ?>"><?= htmlspecialchars($book['owner_username'] ?? 'Utilisateur') ?></a></p>
-
-        <?php if (empty($_SESSION['user_id'])): ?>
-          <p>
-            <a href="/tomtroc/public/auth/login">Connectez-vous</a> pour envoyer un message.
-          </p>
-
-        <?php else: ?>
-          <?php if ((int)$book['user_id'] === (int)$_SESSION['user_id']): ?>
-            <p><em>C'est votre livre.</em></p>
-            <a href="/tomtroc/public/books/edit/<?= (int)$book['id'] ?>">Modifier ce livre</a>
-          <?php else: ?>
-            <a href="/tomtroc/public/messages/new/<?= (int)$book['user_id'] ?>">
-              Envoyer un message
-            </a>
-          <?php endif; ?>
-        <?php endif; ?>
+<div class="book-show-page">
+    <div class="book-show-breadcrumb">
+        <p>Nos livres > <?= htmlspecialchars($book['title']) ?></p>
     </div>
+
+    <div class="book-show-container">
+        <!-- Colonne gauche : Image (50%) -->
+        <div class="book-show-image-section">
+            <?php if (!empty($book['photo'])): ?>
+                <img
+                    src="/tomtroc/public/<?= htmlspecialchars($book['photo']) ?>"
+                    alt="<?= htmlspecialchars($book['title']) ?>"
+                    class="book-show-image"
+                >
+            <?php else: ?>
+                <div class="book-show-image-placeholder">
+                    <i class="fa-solid fa-book"></i>
+                </div>
+            <?php endif; ?>
+        </div>
+
+        <!-- Colonne droite : Informations (50%) -->
+        <div class="book-show-info-section">
+            <div class="book-show-info-content">
+                <div class="book-show-header">
+                    <h1 class="book-show-title"><?= htmlspecialchars($book['title']) ?></h1>
+                    <p class="book-show-author">par <?= htmlspecialchars($book['author']) ?></p>
+                    <div class="book-show-divider"></div>
+                </div>
+                
+                <div class="book-show-middle">
+                    <div class="book-show-block">
+                        <h3 class="book-show-subtitle">DESCRIPTION</h3>
+                        <p class="book-show-text">
+                            <?php if (!empty($book['description'])): ?>
+                                <?= nl2br(htmlspecialchars($book['description'])) ?>
+                            <?php else: ?>
+                                Aucune description disponible.
+                            <?php endif; ?>
+                        </p>
+                    </div>
+
+                    <div class="book-show-block">
+                        <h3 class="book-show-subtitle">PROPRIÉTAIRE</h3>
+                        <p class="book-show-text">
+                            <a href="/tomtroc/public/account/userProfile/<?= (int)$book['user_id'] ?>" class="book-show-owner-link">
+                                <?= htmlspecialchars($book['owner_username'] ?? 'Utilisateur') ?>
+                            </a>
+                        </p>
+                    </div>
+                </div>
+
+                <div class="book-show-actions">
+                    <?php if (empty($_SESSION['user_id'])): ?>
+                        <a href="/tomtroc/public/auth/login" class="book-show-btn">Envoyer un message</a>
+                        <p class="book-show-notice">Connectez-vous pour envoyer un message</p>
+                    <?php else: ?>
+                        <?php if ((int)$book['user_id'] === (int)$_SESSION['user_id']): ?>
+                            <p class="book-show-notice-owner">C'est votre livre.</p>
+                            <a href="/tomtroc/public/books/edit/<?= (int)$book['id'] ?>" class="book-show-btn">Modifier ce livre</a>
+                        <?php else: ?>
+                            <a href="/tomtroc/public/messages/new/<?= (int)$book['user_id'] ?>" class="book-show-btn">Envoyer un message</a>
+                        <?php endif; ?>
+                    <?php endif; ?>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

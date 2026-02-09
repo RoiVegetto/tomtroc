@@ -22,15 +22,41 @@ class MessagesController extends Controller
         $userId = (int)$_SESSION['user_id'];
         $threads = Message::inbox($userId);
 
-        // On récupère le pseudo du "other user" pour affichage
+        // On récupère le pseudo et avatar du "other user" pour affichage
         foreach ($threads as &$t) {
             $other = User::findById((int)$t['other_user_id']);
             $t['other_username'] = $other['username'] ?? 'Utilisateur';
+            $t['other_user_avatar'] = $other['avatar'] ?? '';
+        }
+
+        // Si un paramètre ?conv=X est présent, on charge cette conversation
+        $selectedConversation = null;
+        $messages = [];
+        
+        if (!empty($_GET['conv'])) {
+            $conversationId = (int)$_GET['conv'];
+            
+            // Vérifier que l'utilisateur a accès à cette conversation
+            if (Message::conversationBelongsTo($conversationId, $userId)) {
+                Message::markReadForUser($conversationId, $userId);
+                $messages = Message::getConversationMessages($conversationId);
+                
+                $otherUserId = Message::getOtherUserId($conversationId, $userId);
+                $otherUser = $otherUserId ? User::findById($otherUserId) : null;
+                
+                $selectedConversation = [
+                    'conversation_id' => $conversationId,
+                    'other_username' => $otherUser['username'] ?? 'Utilisateur',
+                    'other_user_avatar' => $otherUser['avatar'] ?? ''
+                ];
+            }
         }
 
         $this->render('messages/index', [
             'title' => 'Messagerie - TomTroc',
-            'threads' => $threads
+            'threads' => $threads,
+            'selectedConversation' => $selectedConversation,
+            'messages' => $messages
         ]);
     }
 

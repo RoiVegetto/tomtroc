@@ -1,4 +1,4 @@
-    <div class="container">
+    <div class="container-exchange">
         <div class="books-header">
             <h1>Nos livres à l'échange</h1>
             <form method="GET" action="/tomtroc/public/books/exchange" class="search-bar">

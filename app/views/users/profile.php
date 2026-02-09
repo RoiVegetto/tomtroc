@@ -1,61 +1,80 @@
-    <div class="container">
-        <h1>Profil de <?= htmlspecialchars($user['username'] ?? 'Utilisateur') ?></h1>
+<?php
+// Calcul de l'ancienneté (valeur par défaut si created_at n'existe pas)
+$memberSince = 'moins d\'un an';
+if (!empty($user['created_at'])) {
+    $createdDate = new DateTime($user['created_at']);
+    $now = new DateTime();
+    $interval = $createdDate->diff($now);
+    $years = $interval->y;
+    if ($years > 0) {
+        $memberSince = $years . ' an' . ($years > 1 ? 's' : '');
+    }
+}
+$bookCount = count($books);
+?>
 
-        <?php if (!empty($error)): ?>
-          <p class="error"><?= htmlspecialchars($error) ?></p>
-        <?php endif; ?>
+<div class="user-profile-page">
+    <div class="user-profile-container">
+        <div class="user-profile-content">
+            <!-- Section gauche : Info utilisateur -->
+            <div class="user-profile-sidebar">
+                <div class="user-avatar-section">
+                    <?php if (!empty($user['avatar'])): ?>
+                        <img src="/tomtroc/public/<?= htmlspecialchars($user['avatar']) ?>" alt="Photo de profil" class="user-avatar">
+                    <?php else: ?>
+                        <div class="user-avatar-placeholder">
+                            <i class="fa-regular fa-user"></i>
+                        </div>
+                    <?php endif; ?>
+                </div>
 
-        <div class="user-info">
-          <label>Adresse email</label><br>
-          <p><?= htmlspecialchars($user['email'] ?? '') ?></p>
-          <br>
+                <div class="user-divider"></div>
 
-          <label>Pseudo</label><br>
-          <p><?= htmlspecialchars($user['username'] ?? '') ?></p>
-          <br>
+                <div class="user-info">
+                    <p class="user-username"><?= htmlspecialchars($user['username']) ?></p>
+                    <p class="user-member-since">Membre depuis <?= $memberSince ?></p>
+                    <p class="user-library-title">BIBLIOTHÈQUE</p>
+                    <p class="user-book-count"><?= $bookCount ?> livre<?= $bookCount > 1 ? 's' : '' ?></p>
+                </div>
 
-          <?php if (!empty($user['avatar'])): ?>
-            <label>Photo de profil</label><br>
-            <img src="/tomtroc/public/<?= htmlspecialchars($user['avatar']) ?>" alt="avatar" width="100">
-            <br><br>
-          <?php endif; ?>
-        </div>
-
-        <hr class="separator">
-
-        <section class="library">
-          <h2>Bibliothèque de <?= htmlspecialchars($user['username'] ?? 'Utilisateur') ?></h2>
-
-        <?php if (empty($books)): ?>
-            <p class="empty-library">
-                Cet utilisateur n'a aucun livre dans sa bibliothèque.
-            </p>
-        <?php else: ?>
-            <div class="books-list">
-                <?php foreach ($books as $book): ?>
-                    <div class="book-item">
-                        <?php if (!empty($book['photo'])): ?>
-                            <img
-                                src="/tomtroc/public/<?= htmlspecialchars($book['photo']) ?>"
-                                alt="<?= htmlspecialchars($book['title']) ?>"
-                                class="book-image"
-                            >
-                        <?php endif; ?>
-                        <h3><?= htmlspecialchars($book['title']) ?></h3>
-                        <p>Auteur: <?= htmlspecialchars($book['author']) ?></p>
-                        <p>Description: <?= htmlspecialchars($book['description']) ?></p>
-                        <p>
-                            Statut :
-                            <strong>
-                                <?= ((int)$book['is_available'] === 1)
-                                    ? "Disponible à l'échange"
-                                    : 'Indisponible'; ?>
-                            </strong>
-                        </p>
-                        <a href="/tomtroc/public/books/show/<?= $book['id'] ?>" class="btn">Voir le livre</a>
-                    </div>
-                <?php endforeach; ?>
+                <?php if (!empty($_SESSION['user_id']) && $_SESSION['user_id'] != $user['id']): ?>
+                    <a href="/tomtroc/public/messages/new?user_id=<?= $user['id'] ?>" class="btn-send-message">Écrire un message</a>
+                <?php endif; ?>
             </div>
-        <?php endif; ?>
-        </section>
+
+            <!-- Section droite : Tableau des livres -->
+            <div class="user-books-section">
+                <?php if (!empty($books)): ?>
+                    <table class="user-books-table">
+                        <thead>
+                            <tr>
+                                <th>PHOTO</th>
+                                <th>TITRE</th>
+                                <th>AUTEUR</th>
+                                <th>DESCRIPTION</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php foreach ($books as $book): ?>
+                                <tr>
+                                    <td class="book-photo-cell">
+                                        <?php if (!empty($book['photo'])): ?>
+                                            <img src="/tomtroc/public/<?= htmlspecialchars($book['photo']) ?>" alt="<?= htmlspecialchars($book['title']) ?>" class="book-thumbnail">
+                                        <?php else: ?>
+                                            <div class="book-thumbnail-placeholder"></div>
+                                        <?php endif; ?>
+                                    </td>
+                                    <td class="book-title-cell"><?= htmlspecialchars($book['title']) ?></td>
+                                    <td class="book-author-cell"><?= htmlspecialchars($book['author']) ?></td>
+                                    <td class="book-description-cell"><?= htmlspecialchars($book['description']) ?></td>
+                                </tr>
+                            <?php endforeach; ?>
+                        </tbody>
+                    </table>
+                <?php else: ?>
+                    <p class="no-books-message">Cet utilisateur n'a aucun livre dans sa bibliothèque.</p>
+                <?php endif; ?>
+            </div>
+        </div>
     </div>
+</div>

@@ -1,16 +1,23 @@
-    <div class="container">
-        <h1>Inscription</h1>
+    <div class="auth-container">
+        <div class="auth-form-section">
+            <div class="auth-form-content">
+                <h1 class="auth-title">Inscription</h1>
 
-        <?php if (!empty($error)): ?>
-          <p style="color:red;"><?= htmlspecialchars($error) ?></p>
-        <?php endif; ?>
+                <?php if (!empty($error)): ?>
+                  <p class="error-message"><?= htmlspecialchars($error) ?></p>
+                <?php endif; ?>
 
-        <form method="POST">
-          <input name="username" placeholder="Pseudo" required><br><br>
-          <input name="email" type="email" placeholder="Email" required><br><br>
-          <input name="password" type="password" placeholder="Mot de passe" required><br><br>
-          <button type="submit">S'inscrire</button>
-        </form>
+                <form method="POST" class="auth-form">
+                  <input type="text" name="username" placeholder="Pseudo" class="auth-input" required>
+                  <input type="email" name="email" placeholder="Email" class="auth-input" required>
+                  <input type="password" name="password" placeholder="Mot de passe" class="auth-input" required>
+                  <button type="submit" class="auth-button">S'inscrire</button>
+                </form>
 
-        <p><a href="/tomtroc/public/auth/login">Déjà inscrit ? Connexion</a></p>
+                <p class="auth-link">Déjà inscrit ? <a href="/tomtroc/public/auth/login">Connectez-vous</a></p>
+            </div>
+        </div>
+        <div class="auth-image-section">
+            <img src="/tomtroc/public/images/bibliotheque.jpg" alt="Bibliothèque">
+        </div>
     </div>
