@@ -42,11 +42,18 @@
 
                     <div class="book-show-block">
                         <h3 class="book-show-subtitle">PROPRIÉTAIRE</h3>
-                        <p class="book-show-text">
-                            <a href="/tomtroc/public/account/userProfile/<?= (int)$book['user_id'] ?>" class="book-show-owner-link">
+                        <div class="book-show-owner">
+                            <div class="book-show-owner-avatar">
+                                <?php if (!empty($book['owner_avatar'])): ?>
+                                    <img src="/tomtroc/public/<?= htmlspecialchars($book['owner_avatar']) ?>" alt="Avatar de <?= htmlspecialchars($book['owner_username'] ?? 'Utilisateur') ?>">
+                                <?php else: ?>
+                                    <i class="fa-regular fa-user"></i>
+                                <?php endif; ?>
+                            </div>
+                            <span class="book-show-owner-name">
                                 <?= htmlspecialchars($book['owner_username'] ?? 'Utilisateur') ?>
-                            </a>
-                        </p>
+                            </span>
+                        </div>
                     </div>
                 </div>
 

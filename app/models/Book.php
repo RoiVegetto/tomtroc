@@ -68,7 +68,8 @@ class Book
         $stmt = $pdo->prepare("
             SELECT
                 b.*,
-                u.username AS owner_username
+                u.username AS owner_username,
+                u.avatar AS owner_avatar
             FROM books b
             JOIN users u ON u.id = b.user_id
             WHERE b.id = :id

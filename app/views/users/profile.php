@@ -38,7 +38,7 @@ $bookCount = count($books);
                 </div>
 
                 <?php if (!empty($_SESSION['user_id']) && $_SESSION['user_id'] != $user['id']): ?>
-                    <a href="/tomtroc/public/messages/new?user_id=<?= $user['id'] ?>" class="btn-send-message">Écrire un message</a>
+                    <a href="/tomtroc/public/messages/new/<?= (int)$user['id'] ?>" class="btn-send-message">Écrire un message</a>
                 <?php endif; ?>
             </div>
 

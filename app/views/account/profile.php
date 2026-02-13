@@ -32,7 +32,7 @@
                                 <i class="fa-regular fa-user"></i>
                             </div>
                         <?php endif; ?>
-                        <button type="button" class="btn-modify-avatar" onclick="document.getElementById('avatar-input').click()">Modifier</button>
+                        <button type="button" class="btn-modify-avatar" onclick="document.getElementById('avatar-input').click()">modifier</button>
                     </div>
 
                     <div class="profile-divider"></div>
@@ -41,7 +41,10 @@
                         <p class="profile-username"><?= htmlspecialchars($user['username']) ?></p>
                         <p class="profile-member-since">Membre depuis <?= $memberSince ?></p>
                         <p class="profile-library-title">BIBLIOTHÈQUE</p>
-                        <p class="profile-book-count"><?= $bookCount ?> livre<?= $bookCount > 1 ? 's' : '' ?></p>
+                        <p class="profile-book-count">
+                            <img src="/tomtroc/public/images/books.svg" alt="Livres" class="profile-book-icon">
+                            <span><?= $bookCount ?> livre<?= $bookCount > 1 ? 's' : '' ?></span>
+                        </p>
                     </div>
                 </div>
 

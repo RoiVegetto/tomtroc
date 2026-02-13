@@ -72,18 +72,8 @@ class MessagesController extends Controller
             die("Accès interdit");
         }
 
-        $otherUserId = Message::getOtherUserId($conversationId, $userId);
-        $otherUser = $otherUserId ? User::findById($otherUserId) : null;
-
-        Message::markReadForUser($conversationId, $userId);
-        $messages = Message::getConversationMessages($conversationId);
-
-        $this->render('messages/thread', [
-            'title' => 'Discussion avec ' . ($otherUser['username'] ?? 'Utilisateur') . ' - TomTroc',
-            'conversationId' => $conversationId,
-            'messages'       => $messages,
-            'otherUser'      => $otherUser, // ✅ pour afficher le pseudo en haut
-        ]);
+        header("Location: /tomtroc/public/messages?conv=$conversationId");
+        exit;
     }
 
     // GET /messages/new/{userId}
@@ -98,10 +88,10 @@ class MessagesController extends Controller
             die("Destinataire invalide");
         }
 
-        // ✅ Si la conversation existe déjà, on redirige directement vers le thread
+        // ✅ Si la conversation existe déjà, on redirige directement vers la messagerie
         $existingConvId = Message::findConversationIdBetween($senderId, $receiverId);
         if ($existingConvId) {
-            header("Location: /tomtroc/public/messages/thread/$existingConvId");
+            header("Location: /tomtroc/public/messages?conv=$existingConvId");
             exit;
         }
 
@@ -110,32 +100,8 @@ class MessagesController extends Controller
             die("Utilisateur introuvable");
         }
 
-        $this->render('messages/new', [
-            'title' => 'Nouveau message - TomTroc',
-            'receiver' => $receiver
-        ]);
-    }
-
-    // POST /messages/new/{userId}
-    public function newPost($receiverId)
-    {
-        $this->requireAuth();
-
-        $receiverId = (int)$receiverId;
-        $senderId   = (int)$_SESSION['user_id'];
-        $body       = $_POST['body'] ?? '';
-
-        // crée ou récupère la conversation (1 seule fois)
+        // ✅ Sinon on crée la conversation puis on ouvre la messagerie directement
         $convId = Message::getOrCreateConversation($senderId, $receiverId);
-
-        if (!Message::send($senderId, $receiverId, $body)) {
-            $receiver = User::findById($receiverId);
-            return $this->render('messages/new', [
-                'receiver' => $receiver,
-                'error' => 'Message vide.'
-            ]);
-        }
-
         header("Location: /tomtroc/public/messages?conv=$convId");
         exit;
     }
@@ -160,15 +126,8 @@ class MessagesController extends Controller
         }
 
         if (!Message::send($userId, $receiverId, $body)) {
-            $messages = Message::getConversationMessages($conversationId);
-            $otherUser = User::findById($receiverId);
-
-            return $this->render('messages/thread', [
-                'conversationId' => $conversationId,
-                'messages'       => $messages,
-                'otherUser'      => $otherUser,
-                'error'          => 'Message vide.'
-            ]);
+            header("Location: /tomtroc/public/messages?conv=$conversationId");
+            exit;
         }
 
         header("Location: /tomtroc/public/messages?conv=$conversationId");

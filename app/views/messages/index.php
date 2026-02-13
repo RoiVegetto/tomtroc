@@ -1,5 +1,4 @@
 <div class="messagerie-page">
-    <div class="messagerie-container">
         <h1 class="messagerie-title">Messagerie</h1>
 
         <div class="messagerie-content">
@@ -13,6 +12,12 @@
                         <?php foreach ($threads as $t): ?>
                             <?php 
                             $isActive = !empty($_GET['conv']) && (int)$_GET['conv'] === (int)$t['conversation_id'];
+                            $lastCreatedAt = !empty($t['last_at']) ? strtotime($t['last_at']) : null;
+                            $lastLabel = '';
+                            if (!empty($lastCreatedAt)) {
+                                $isToday = date('Y-m-d', $lastCreatedAt) === date('Y-m-d');
+                                $lastLabel = $isToday ? date('H:i', $lastCreatedAt) : date('d.m', $lastCreatedAt);
+                            }
                             ?>
                             <li class="thread-item <?= $isActive ? 'thread-item--active' : '' ?>">
                                 <a href="/tomtroc/public/messages?conv=<?= (int)$t['conversation_id'] ?>" class="thread-item-link">
@@ -27,7 +32,7 @@
                                         <div class="thread-item-info">
                                             <div class="thread-item-header">
                                                 <strong class="thread-item-username"><?= htmlspecialchars($t['other_username']) ?></strong>
-                                                <span class="thread-item-time"><?= !empty($t['last_created_at']) ? date('H:i', strtotime($t['last_created_at'])) : '' ?></span>
+                                                <span class="thread-item-time"><?= $lastLabel ?></span>
                                                 <?php if ((int)$t['unread_count'] > 0): ?>
                                                     <span class="thread-unread-badge"><?= (int)$t['unread_count'] ?></span>
                                                 <?php endif; ?>
@@ -49,24 +54,50 @@
             <!-- Colonne droite : Conversation -->
             <div class="messagerie-conversation">
                 <div class="conversation-content">
-                    <?php if (!empty($selectedConversation) && !empty($messages)): ?>
+                    <?php if (!empty($selectedConversation)): ?>
                         <div class="conversation-header">
-                            <h2 class="conversation-header-title"><?= htmlspecialchars($selectedConversation['other_username'] ?? 'Utilisateur') ?></h2>
+                            <div class="conversation-header-user">
+                                <div class="conversation-header-avatar">
+                                    <?php if (!empty($selectedConversation['other_user_avatar'])): ?>
+                                        <img src="/tomtroc/public/<?= htmlspecialchars($selectedConversation['other_user_avatar']) ?>" alt="Avatar">
+                                    <?php else: ?>
+                                        <i class="fa-regular fa-user"></i>
+                                    <?php endif; ?>
+                                </div>
+                                <h2 class="conversation-header-title"><?= htmlspecialchars($selectedConversation['other_username'] ?? 'Utilisateur') ?></h2>
+                            </div>
                         </div>
 
                         <div class="conversation-messages">
-                            <?php foreach ($messages as $msg): ?>
-                                <?php $isMe = (int)$msg['sender_id'] === (int)$_SESSION['user_id']; ?>
-                                <div class="message <?= $isMe ? 'message--me' : 'message--other' ?>">
-                                    <div class="message__meta"><?= date('d/m/Y H:i', strtotime($msg['created_at'])) ?></div>
-                                    <div class="message__bubble"><?= nl2br(htmlspecialchars($msg['body'])) ?></div>
+                            <?php if (!empty($messages)): ?>
+                                <?php foreach ($messages as $msg): ?>
+                                    <?php $isMe = (int)$msg['sender_id'] === (int)$_SESSION['user_id']; ?>
+                                    <div class="message <?= $isMe ? 'message--me' : 'message--other' ?>">
+                                        <div class="message__meta">
+                                            <?php if (!$isMe): ?>
+                                                <span class="message__avatar">
+                                                    <?php if (!empty($selectedConversation['other_user_avatar'])): ?>
+                                                        <img src="/tomtroc/public/<?= htmlspecialchars($selectedConversation['other_user_avatar']) ?>" alt="Avatar">
+                                                    <?php else: ?>
+                                                        <i class="fa-regular fa-user"></i>
+                                                    <?php endif; ?>
+                                                </span>
+                                            <?php endif; ?>
+                                            <span class="message__time"><?= date('d.m H:i', strtotime($msg['created_at'])) ?></span>
+                                        </div>
+                                        <div class="message__bubble"><?= nl2br(htmlspecialchars($msg['body'])) ?></div>
+                                    </div>
+                                <?php endforeach; ?>
+                            <?php else: ?>
+                                <div class="conversation-empty">
+                                    <p>Dites bonjour pour démarrer la conversation.</p>
                                 </div>
-                            <?php endforeach; ?>
+                            <?php endif; ?>
                         </div>
 
                         <div class="conversation-form">
                             <form method="POST" action="/tomtroc/public/messages/thread/<?= (int)$selectedConversation['conversation_id'] ?>">
-                                <textarea name="body" class="conversation-textarea" rows="3" placeholder="Tapez votre message ici..." required></textarea>
+                                <textarea name="body" class="conversation-textarea" rows="1" placeholder="Tapez votre message ici" required></textarea>
                                 <button type="submit" class="conversation-submit-btn">Envoyer</button>
                             </form>
                         </div>
@@ -84,5 +115,4 @@
                 </div>
             </div>
         </div>
-    </div>
 </div>
