@@ -26,6 +26,15 @@ Application PHP MVC pour l'echange de livres entre utilisateurs.
 
 - Ouvrir `http://localhost/tomtroc/public/`.
 
+## Import des donnees (optionnel)
+
+Si tu veux charger les livres de demo:
+
+1. Importer d'abord [schema.sql](schema.sql).
+2. Importer ensuite [seed_books.sql](seed_books.sql).
+
+Les deux fichiers peuvent etre importes via phpMyAdmin.
+
 ## Notes
 
 - Les fichiers uploades sont stockes dans [public/uploads](public/uploads).
