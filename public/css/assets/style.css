@@ -252,7 +252,7 @@ nav a.nav-compte i {
   font-size: 16px;
   line-height: 100%;
   margin: 0;
-  color: #292929;
+  color: #000000;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
@@ -550,6 +550,7 @@ nav a.nav-compte i {
   font-size: 13px;
   color: #999;
   font-style: italic;
+  text-align: center;
 }
 
 .book-show-notice-owner {
@@ -1009,6 +1010,14 @@ nav a.nav-compte i {
   display: flex;
   align-items: center;
   justify-content: center;
+}
+
+.steps-grid .step:first-child {
+  padding: 0 40px;
+}
+
+.steps-grid .step:not(:first-child) {
+  padding: 0 24px;
 }
 
 .step p {
@@ -1487,6 +1496,8 @@ nav a.nav-compte i {
   width: 100%;
   border-collapse: collapse;
   font-family: 'Inter', sans-serif;
+  width: calc(100% + 80px);
+  margin: 0 -40px;
 }
 
 .books-table thead {
@@ -1499,7 +1510,7 @@ nav a.nav-compte i {
   font-weight: 700;
   font-size: 11px;
   letter-spacing: 0.1em;
-  color: #666;
+  color: #292929;
 }
 
 .books-table tbody tr {
@@ -1507,9 +1518,23 @@ nav a.nav-compte i {
   transition: background 0.2s ease;
 }
 
+.books-table tbody tr:nth-child(even) {
+  background: #EDF2F6;
+}
+
 .books-table td {
   padding: 20px 12px;
   vertical-align: middle;
+}
+
+.books-table th:first-child,
+.books-table td:first-child {
+  padding-left: 52px;
+}
+
+.books-table th:last-child,
+.books-table td:last-child {
+  padding-right: 52px;
 }
 
 .book-photo-cell {
@@ -1517,8 +1542,8 @@ nav a.nav-compte i {
 }
 
 .book-thumbnail {
-  width: 60px;
-  height: 80px;
+  width: 78px;
+  height: 78px;
   object-fit: cover;
   border-radius: 4px;
 }
@@ -1539,13 +1564,13 @@ nav a.nav-compte i {
 
 .book-author-cell {
   font-size: 13px;
-  color: #666;
+  color: #292929;
   max-width: 150px;
 }
 
 .book-description-cell {
   font-size: 13px;
-  color: #666;
+  color: #292929;
   max-width: 300px;
   line-height: 1.4;
 }
@@ -1572,10 +1597,6 @@ nav a.nav-compte i {
 .availability-badge.unavailable {
   background: #C56D6D;
   color: #FFFFFF;
-}
-
-.book-actions-cell {
-  width: 180px;
 }
 
 .btn-action-edit,
