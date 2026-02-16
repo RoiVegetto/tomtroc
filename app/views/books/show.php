@@ -41,7 +41,7 @@
                     </div>
 
                     <div class="book-show-block">
-                        <h3 class="book-show-subtitle">PROPRIÉTAIRE</h3>
+                        <h2 class="book-show-subtitle">PROPRIÉTAIRE</h2>
                         <div class="book-show-owner">
                             <div class="book-show-owner-avatar">
                                 <?php if (!empty($book['owner_avatar'])): ?>
